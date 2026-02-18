@@ -10,9 +10,6 @@ export default defineConfig({
     react(),
     legacy(), 
   ],
-  build:{
-    outDir: 'public'
-  },
   test: {
     globals: true,
     environment: 'jsdom',
