@@ -1,12 +1,24 @@
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonImg,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+} from '@ionic/react';
+
 import { camera } from 'ionicons/icons';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon } from '@ionic/react';
-// CHANGE: Add `usePhotoGallery` import
 import { usePhotoGallery } from '../hooks/usePhotoGallery';
 import './Tab2.css';
 
 const Tab2: React.FC = () => {
-  // CHANGE: Destructure `addNewToGallery()` from `usePhotoGallery()`
-  const { addNewToGallery } = usePhotoGallery();
+  const { photos, addNewToGallery, deletePhoto } = usePhotoGallery();
 
   return (
     <IonPage>
@@ -15,6 +27,7 @@ const Tab2: React.FC = () => {
           <IonTitle>Photo Gallery</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
@@ -22,10 +35,23 @@ const Tab2: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
+        <IonGrid>
+          <IonRow>
+            {photos.map((photo) => (
+              <IonCol
+                size="6"
+                key={photo.filepath}
+                onClick={() => deletePhoto(photo)}
+              >
+                <IonImg src={photo.webviewPath} />
+              </IonCol>
+            ))}
+          </IonRow>
+        </IonGrid>
+
         <IonFab vertical="bottom" horizontal="center" slot="fixed">
-          {/* CHANGE: Add a click event listener to the floating action button */}
-          <IonFabButton onClick={() => addNewToGallery()}>
-            <IonIcon icon={camera}></IonIcon>
+          <IonFabButton onClick={addNewToGallery}>
+            <IonIcon icon={camera} />
           </IonFabButton>
         </IonFab>
       </IonContent>
